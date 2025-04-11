@@ -18,9 +18,9 @@ namespace MeetingManagementWeb.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("0267480b-8765-4347-b5d1-18b8d18358ae"), "Global Corp" },
-                    { new Guid("859f0788-3d16-46d3-9421-44802b1e0259"), "XYZ Enterprises" },
-                    { new Guid("b2ef4b41-a7ef-4f01-985e-a805a2d835cf"), "ABC Technologies" }
+                    { new Guid("0267480b-8765-4347-b5d1-18b8d18358ae"), "FYZ IT" },
+                    { new Guid("859f0788-3d16-46d3-9421-44802b1e0259"), "XYZ IT" },
+                    { new Guid("b2ef4b41-a7ef-4f01-985e-a805a2d835cf"), "Generation-Next IT" }
                 });
 
             migrationBuilder.InsertData(
@@ -28,9 +28,9 @@ namespace MeetingManagementWeb.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("39ea6912-30dd-4626-8426-a8fa39256a2c"), "John Doe" },
-                    { new Guid("7a5c3041-7e48-40b0-b475-1cdf4bcfafa1"), "Jane Smith" },
-                    { new Guid("923829fa-54ca-40aa-a0c1-4f121f7a7338"), "Michael Johnson" }
+                    { new Guid("39ea6912-30dd-4626-8426-a8fa39256a2c"), "Abdur Rashed" },
+                    { new Guid("7a5c3041-7e48-40b0-b475-1cdf4bcfafa1"), "Milon Patwary" },
+                    { new Guid("923829fa-54ca-40aa-a0c1-4f121f7a7338"), "Rakib Ahmed" }
                 });
 
             migrationBuilder.InsertData(

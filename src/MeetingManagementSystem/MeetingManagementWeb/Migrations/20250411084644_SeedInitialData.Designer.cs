@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingManagementWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250411083446_SeedInitialData")]
+    [Migration("20250411084644_SeedInitialData")]
     partial class SeedInitialData
     {
         /// <inheritdoc />
@@ -43,17 +43,17 @@ namespace MeetingManagementWeb.Migrations
                         new
                         {
                             Id = new Guid("b2ef4b41-a7ef-4f01-985e-a805a2d835cf"),
-                            Name = "ABC Technologies"
+                            Name = "Generation-Next IT"
                         },
                         new
                         {
                             Id = new Guid("859f0788-3d16-46d3-9421-44802b1e0259"),
-                            Name = "XYZ Enterprises"
+                            Name = "XYZ IT"
                         },
                         new
                         {
                             Id = new Guid("0267480b-8765-4347-b5d1-18b8d18358ae"),
-                            Name = "Global Corp"
+                            Name = "FYZ IT"
                         });
                 });
 
@@ -75,17 +75,17 @@ namespace MeetingManagementWeb.Migrations
                         new
                         {
                             Id = new Guid("39ea6912-30dd-4626-8426-a8fa39256a2c"),
-                            Name = "John Doe"
+                            Name = "Abdur Rashed"
                         },
                         new
                         {
                             Id = new Guid("7a5c3041-7e48-40b0-b475-1cdf4bcfafa1"),
-                            Name = "Jane Smith"
+                            Name = "Milon Patwary"
                         },
                         new
                         {
                             Id = new Guid("923829fa-54ca-40aa-a0c1-4f121f7a7338"),
-                            Name = "Michael Johnson"
+                            Name = "Rakib Ahmed"
                         });
                 });
 
