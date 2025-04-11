@@ -86,7 +86,7 @@ namespace MeetingManagementWeb.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MeetingManagementWeb.Models.ProductService", b =>
+            modelBuilder.Entity("MeetingManagementWeb.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

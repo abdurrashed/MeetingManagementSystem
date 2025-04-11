@@ -5,7 +5,7 @@ namespace MeetingManagementWeb.Services.Interface
     public interface IProductService
     {
 
-        List<ProductService> GetProductServices();
+        List<Product> GetProductServices();
         string GetUnitByProductId(Guid productId);
     }
 }

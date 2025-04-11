@@ -9,7 +9,7 @@ namespace MeetingManagementWeb.Data
 
         public DbSet<CorporateCustomer> Corporate_Customer_Tbl { get; set; }
         public DbSet<IndividualCustomer> Individual_Customer_Tbl { get; set; }
-        public DbSet<ProductService> Products_Service_Tbl { get; set; }
+        public DbSet<Product> Products_Service_Tbl { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,13 +27,13 @@ namespace MeetingManagementWeb.Data
                 new IndividualCustomer { Id = new Guid("923829fa-54ca-40aa-a0c1-4f121f7a7338"), Name = "Rakib Ahmed" }
             );
 
-            modelBuilder.Entity<ProductService>().HasData(
-                new ProductService { Id = new Guid("050f85ac-aa29-429a-a335-653cd09a196b"), Name = "Consulting", Unit = "Hour" },
-                new ProductService { Id = new Guid("ce9466d9-8491-4408-aeeb-a4880d2063e0"), Name = "Software License", Unit = "Piece" },
-                new ProductService { Id = new Guid("cd7b345b-3037-4216-8065-9f8d69966ae1"), Name = "Hardware Device", Unit = "Unit" }
+            modelBuilder.Entity<Product>().HasData(
+                new Product { Id = new Guid("050f85ac-aa29-429a-a335-653cd09a196b"), Name = "Consulting", Unit = "Hour" },
+                new Product{ Id = new Guid("ce9466d9-8491-4408-aeeb-a4880d2063e0"), Name = "Software License", Unit = "Piece" },
+                new Product { Id = new Guid("cd7b345b-3037-4216-8065-9f8d69966ae1"), Name = "Hardware Device", Unit = "Unit" }
             );
         }
-
+       
 
 
     }
