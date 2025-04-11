@@ -3,7 +3,7 @@
     public class MeetingMinutesDetails
     {
         public Guid ServiceProductId { get; set; }
-        public int Quantity { get; set; }
+        public Decimal Quantity { get; set; }
 
 
     }
