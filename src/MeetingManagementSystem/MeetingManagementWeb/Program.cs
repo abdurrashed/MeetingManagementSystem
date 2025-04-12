@@ -1,5 +1,7 @@
 using MeetingManagementWeb.Data;
 using MeetingManagementWeb.Models;
+using MeetingManagementWeb.Services.Implementation;
+using MeetingManagementWeb.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IMeetingService, MeetingService>();
 
 var app = builder.Build();
 

@@ -16,7 +16,7 @@ namespace MeetingManagementWeb.Services.Implementation
             _context = context;
         }
 
-        public List<Product> GetProductServices()
+        public List<Product> GetProducts()
         {
             return _context.Products_Service_Tbl.ToList();
         }

@@ -1,6 +1,7 @@
 ﻿using MeetingManagementWeb.Data;
 using MeetingManagementWeb.Models;
 using MeetingManagementWeb.Services.Interface;
+using MeetingManagementWeb.ViewModel;
 
 namespace MeetingManagementWeb.Services.Implementation
 {
@@ -11,17 +12,29 @@ namespace MeetingManagementWeb.Services.Implementation
 
         public CustomerService(ApplicationDbContext context)
         {
-
             _context = context;
         }
-        public List<CorporateCustomer> GetCorporateCustomers()
+
+        public List<CustomerViewModel> GetCorporateCustomers()
         {
-            return _context.Corporate_Customer_Tbl.ToList();
+            return _context.Corporate_Customer_Tbl
+                .Select(c => new CustomerViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToList();
         }
 
-        public List<IndividualCustomer> GetIndividualCustomers()
+        public List<CustomerViewModel> GetIndividualCustomers()
         {
-            return _context.Individual_Customer_Tbl.ToList();
+            return _context.Individual_Customer_Tbl
+                .Select(c => new CustomerViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToList();
         }
     }
 }

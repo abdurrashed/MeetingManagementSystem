@@ -1,0 +1,313 @@
+﻿@using MeetingManagementWeb.ViewModel
+@model MeetingDataModel
+@{
+    ViewData["Title"] = "Meeting Minutes";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css" rel="stylesheet" />
+}
+
+<div class="container-fluid py-2">
+    <div class="card shadow-sm">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+            <h6 class="mb-0">Meeting Minutes</h6>
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+        </div>
+        <div class="card-body py-2">
+            <form id="meetingForm" asp-action="SaveMeeting" method="post">
+                @Html.AntiForgeryToken()
+
+                <!-- Customer Type Selection -->
+                <div class="mb-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CustomerType" id="typeCorporate" value="Corporate" checked />
+                        <label class="form-check-label" for="typeCorporate">Corporate</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CustomerType" id="typeIndividual" value="Individual" />
+                        <label class="form-check-label" for="typeIndividual">Individual</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Left Column -->
+                    <div class="col-md-6 pr-md-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-2">
+                                    <label for="CustomerId" class="mb-1">Customer Name<span class="text-danger">*</span></label>
+                                    <div id="customerDropdownContainer">
+                                        @{
+                                            Html.RenderPartial("_CustomerDropdown", new List<CustomerViewModel>());
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Date and Time -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <label for="MeetingDate" class="mb-1">Date</label>
+                                    <input type="text" id="MeetingDate" name="Master.Date" class="form-control form-control-sm datepicker" placeholder="DD/MM/YYYY" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <label for="MeetingTime" class="mb-1">Time</label>
+                                    <input type="text" id="MeetingTime" name="Master.Time" class="form-control form-control-sm timepicker" placeholder="9:00 AM" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meeting Place -->
+                        <div class="form-group mb-2">
+                            <label for="MeetingPlace" class="mb-1">Meeting Place<span class="text-danger">*</span></label>
+                            <input type="text" id="MeetingPlace" name="Master.MeetingPlace" class="form-control form-control-sm" placeholder="meeting place" />
+                        </div>
+
+                        <!-- Attendees -->
+                        <div class="form-group mb-2">
+                            <label for="ClientSide" class="mb-1">Attends From Client Side<span class="text-danger">*</span></label>
+                            <textarea id="ClientSide" name="Master.ClientSide" class="form-control form-control-sm" placeholder="Present client side" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="HostSide" class="mb-1">Attends From Host Side<span class="text-danger">*</span></label>
+                            <textarea id="HostSide" name="Master.HostSide" class="form-control form-control-sm" placeholder="Present staff side" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-md-6 pl-md-3">
+                        <!-- Meeting Details -->
+                        <div class="form-group mb-2">
+                            <label for="MeetingAgenda" class="mb-1">Meeting Agenda<span class="text-danger">*</span></label>
+                            <textarea id="MeetingAgenda" name="Master.MeetingAgenda" class="form-control form-control-sm" placeholder="Meeting agenda" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="MeetingDiscussion" class="mb-1">Meeting Discussion<span class="text-danger">*</span></label>
+                            <textarea id="MeetingDiscussion" name="Master.MeetingDiscussion" class="form-control form-control-sm" placeholder="Meeting discussion" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="MeetingDecision" class="mb-1">Meeting Decision<span class="text-danger">*</span></label>
+                            <textarea id="MeetingDecision" name="Master.MeetingDecision" class="form-control form-control-sm" placeholder="Meeting decision" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products/Services Section -->
+                <div class="card mt-3 border">
+                    <div class="card-body py-2">
+
+                        <div class="row align-items-end mb-2">
+                            <div class="col-md-5">
+                                <label for="ProductId" class="mb-1">Select Product/Service</label>
+                                <select id="ProductId" class="form-control form-control-sm">
+                                    <option value="">select product/service interested</option>
+                                    @foreach (var p in ViewBag.Products)
+                                    {
+                                        <option value="@p.Id">@p.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="Quantity" class="mb-1">Quantity</label>
+                                <input type="number" id="Quantity" class="form-control form-control-sm" min="1" />
+                            </div>
+                            <div class="col-md-2">
+                                <label for="Unit" class="mb-1">Unit</label>
+                                <input type="text" id="Unit" class="form-control form-control-sm" readonly />
+                            </div>
+                            <div class="col-md-3 text-left mt-md-4">
+                                <button type="button" id="btnAddProduct" class="btn btn-secondary btn-sm px-3">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm" id="productTable">
+                                <thead>
+                                    <tr>
+                                        <th width="5%" class="bg-light">Sl#</th>
+                                        <th width="45%" class="bg-light">Interested Product/Service Name</th>
+                                        <th width="15%" class="bg-light">Quantity</th>
+                                        <th width="15%" class="bg-light">Unit</th>
+                                        <th width="10%" class="bg-light">Edit</th>
+                                        <th width="10%" class="bg-light">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="noRecords">
+                                        <td colspan="6" class="text-center">No matching records found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button type="button" id="btnRefresh" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+    <script>
+        $(function () {
+            // Initialize datepicker
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            // Initialize timepicker with 12-hour format (9:10 AM, 3:20 PM)
+            $('.timepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 15,
+                dropdown: true,
+                scrollbar: true
+            });
+
+            // Handle customer type change
+            $('input[name="CustomerType"]').change(function () {
+                var type = $(this).val();
+                $.get('/Meeting/GetCustomers', { type: type }, function (data) {
+                    $('#customerDropdownContainer').html(data);
+                });
+            });
+
+            // Handle product change to get unit
+            $('#ProductId').change(function () {
+                let productId = $(this).val();
+                if (productId) {
+                    $.get('/Meeting/GetUnit', { productId }, function (data) {
+                        $('#Unit').val(data);
+                    });
+                } else {
+                    $('#Unit').val('');
+                }
+            });
+
+            // Add product to table
+            $('#btnAddProduct').click(function () {
+                let productId = $('#ProductId').val();
+                let productName = $('#ProductId option:selected').text();
+                let quantity = $('#Quantity').val();
+                let unit = $('#Unit').val();
+
+                if (productId && quantity) {
+                    // Remove "no records" row if exists
+                    $('#noRecords').remove();
+
+                    let index = $('#productTable tbody tr').length;
+                    let row = `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>
+                                <input type="hidden" name="Details[${index}].ProductId" value="${productId}" />
+                                ${productName}
+                            </td>
+                            <td>
+                                <input type="hidden" name="Details[${index}].Quantity" value="${quantity}" />
+                                ${quantity}
+                            </td>
+                            <td>
+                                <input type="hidden" name="Details[${index}].Unit" value="${unit}" />
+                                ${unit}
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-warning editRow">
+                                    Edit
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-danger deleteRow">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>`;
+                    $('#productTable tbody').append(row);
+
+                    // Reset inputs
+                    $('#ProductId').val('');
+                    $('#Quantity').val('');
+                    $('#Unit').val('');
+                } else {
+                    alert('Please select a product and enter quantity');
+                }
+            });
+
+            // Handle delete row
+            $('#productTable').on('click', '.deleteRow', function () {
+                $(this).closest('tr').remove();
+
+                // Renumber the rows
+                $('#productTable tbody tr').each(function(index) {
+                    $(this).find('td:first').text(index + 1);
+                });
+
+                // Add "no records" row if table is empty
+                if ($('#productTable tbody tr').length === 0) {
+                    $('#productTable tbody').html('<tr id="noRecords"><td colspan="6" class="text-center">No matching records found</td></tr>');
+                }
+            });
+
+            // Handle edit row
+            $('#productTable').on('click', '.editRow', function () {
+                let row = $(this).closest('tr');
+                let productId = row.find('input[name^="Details"][name$=".ProductId"]').val();
+                let quantity = row.find('input[name^="Details"][name$=".Quantity"]').val();
+                let unit = row.find('input[name^="Details"][name$=".Unit"]').val();
+
+                $('#ProductId').val(productId);
+                $('#Quantity').val(quantity);
+                $('#Unit').val(unit);
+
+                row.remove();
+
+                // Renumber the rows
+                $('#productTable tbody tr').each(function(index) {
+                    $(this).find('td:first').text(index + 1);
+                });
+
+                // Add "no records" row if table is empty
+                if ($('#productTable tbody tr').length === 0) {
+                    $('#productTable tbody').html('<tr id="noRecords"><td colspan="6" class="text-center">No matching records found</td></tr>');
+                }
+            });
+
+            // Handle refresh button
+            $('#btnRefresh').click(function() {
+                $('#meetingForm')[0].reset();
+                $('#productTable tbody').html('<tr id="noRecords"><td colspan="6" class="text-center">No matching records found</td></tr>');
+            });
+        });
+    </script>
+}

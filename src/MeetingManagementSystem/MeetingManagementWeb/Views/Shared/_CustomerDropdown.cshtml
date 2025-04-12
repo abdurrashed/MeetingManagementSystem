@@ -1,0 +1,9 @@
+﻿@model IEnumerable<CustomerViewModel>
+
+<select name="Master.CustomerId" class="form-control" required>
+    <option value="">Select Customer</option>
+    @foreach (var customer in Model)
+    {
+        <option value="@customer.Id">@customer.Name</option>
+    }
+</select>
