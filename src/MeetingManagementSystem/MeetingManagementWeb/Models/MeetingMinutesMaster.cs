@@ -4,6 +4,9 @@ namespace MeetingManagementWeb.Models
 {
     public class MeetingMinutesMaster
     {
+
+
+        public Guid Id { get; set; }
         [Required]
         public Guid CustomerId { get; set; }
 
