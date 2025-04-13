@@ -55,9 +55,25 @@ namespace MeetingManagementWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SaveMeeting(MeetingDataModel data)
         {
+
+
+            data.Master.Id = Guid.NewGuid();
+            foreach (var detail in data.Details)
+            {
+                detail.MeetingMinutesId = data.Master.Id;
+            }
+
+
+
+
             if (data != null)
             {
-                _meetingService.SaveMeeting(data.Master, data.Details);
+                if (ModelState.IsValid)
+                {
+                    _meetingService.SaveMeeting(data.Master, data.Details);
+
+                }
+               
                 TempData["SuccessMessage"] = "Meeting saved successfully.";
             }
             else

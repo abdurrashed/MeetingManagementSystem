@@ -10,6 +10,8 @@ namespace MeetingManagementWeb.Data
         public DbSet<CorporateCustomer> Corporate_Customer_Tbl { get; set; }
         public DbSet<IndividualCustomer> Individual_Customer_Tbl { get; set; }
         public DbSet<Product> Products_Service_Tbl { get; set; }
+        public DbSet<MeetingMinutesMaster> Meeting_Minutes_Master_Tbl { get; set; }
+        public DbSet<MeetingMinutesDetails> Meeting_Minutes_Details_Tbl { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
